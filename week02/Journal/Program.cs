@@ -1,3 +1,12 @@
+//Notes about the additional features added
+//1. In the Journal class when the option "2. Display" is selected there is an if loop to check if there is information
+//   to display, if there is not a message pops up, if possitive the behaviour continues.
+//2. In the Journal class there are confirmation messages added when the "savetofile" and "loadtofile" process finishes.
+//3. In Main menu there is an additional feature on the loop, in case a wrong number or data is recieved a try again is 
+//   requested and loops back to the menu.
+//4. The file is saved in .json format and recovered from that format also.
+
+
 using System;
 using System.IO;
 using System.Collections.Generic;

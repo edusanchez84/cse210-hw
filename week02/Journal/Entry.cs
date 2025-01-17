@@ -1,22 +1,40 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 class Entry
 {
-    public string _date;
-    public string _promptText;
-    public string _entryText;
+    [JsonPropertyName("_date")]
+    public string Date { get; set; }
 
-    public Entry (string date, string promptText, string entryText)
+    [JsonPropertyName("_promptText")]
+    public string PromptText { get; set; }
+
+    [JsonPropertyName("_entryText")]
+    public string EntryText { get; set; }
+
+    // Default constructor for deserialization
+    public Entry() 
     {
-        _date = date;
-        _promptText = promptText;
-        _entryText = entryText;
+        
     }
 
+    // Constructor for manual creation
+    public Entry(string date, string promptText, string entryText)
+    {
+        Date = date;
+        PromptText = promptText;
+        EntryText = entryText;
+    }
+
+    
     public void Display()
     {
-        Console.WriteLine($"Date: {_date} - Prompt: {_promptText}");
-        Console.WriteLine($"{_entryText}");
+        Console.WriteLine($"Date: {Date} - Prompt: {PromptText}");
+        Console.WriteLine($"{EntryText}");
         Console.WriteLine("");
     }
 }

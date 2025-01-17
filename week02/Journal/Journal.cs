@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection.Metadata.Ecma335;
+using System.Text.Json;
 
 class Journal
 {
@@ -31,43 +32,39 @@ class Journal
 
     public void SaveToFile(List<Entry> _entryList)
     {
-        Console.WriteLine("What is the filename?");
+        Console.WriteLine("What is the filename? please end the filename with the extension '.json'");
         string filename = Console.ReadLine();
-        using (StreamWriter outputFile = new StreamWriter(filename))
-        {
-            foreach (Entry i in _entryList)
-                {
-                    outputFile.WriteLine($"{i._date}|{i._promptText}|{i._entryText}");
-                }
-        }
+        
+        string jsonString = JsonSerializer.Serialize(_entryList);
+        File.WriteAllText(filename, jsonString);
         Console.WriteLine("The file has been saved.");
+        
     }
 
     public void LoadFromFile()
     {
-        Console.WriteLine("What is the filename?");
-        string readFile = Console.ReadLine();
-        
-        using (StreamReader reader = new StreamReader(readFile))
+        Console.WriteLine("What is the filename? remember to add the extension '.json' to the end of the filename");
+        string filename = Console.ReadLine();
+
+        // Read JSON from the file
+        string jsonString = File.ReadAllText(filename);
+
+        // Deserialize the JSON back into a list
+        var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonString);
+
+        if (entryList != null)
         {
-            string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] parts = line.Split("|");
-                        //parts[0] - _date
-                        //parts[1] - _promptText
-                        //parts[2] - _entryText
-
-                        string date = parts [0];
-                        string promptText = parts[1];
-                        string entryText = parts[2];
-
-                        Entry newEntry = new Entry(date, promptText, entryText);
-                        _entryList.Add(newEntry);
-                        
-                    }
-            
+            foreach (Entry i in entryList)
+            {
+                Entry newEntry = new Entry (i.Date, i.PromptText, i.EntryText);
+                _entryList.Add(newEntry);
+            }
+            Console.WriteLine("The file has been loaded. Select option 2 to view the journal.");
         }
-        Console.WriteLine("The file has been loaded, select 2 to view the journal");
+        else
+        {
+            Console.WriteLine("The file is empty or contains invalid data.");
+        }
+       
     }   
 }
