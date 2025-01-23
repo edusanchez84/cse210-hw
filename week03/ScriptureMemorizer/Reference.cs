@@ -24,7 +24,7 @@ class Reference
     }
 
 
-    public string GetDisplayHead(string fileHead)
+    public string GetDisplayText(string fileHead)
     {
         string[] separatedFileHead = fileHead.Split("$");
         if (separatedFileHead.Length == 4)

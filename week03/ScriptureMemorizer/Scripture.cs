@@ -19,10 +19,8 @@ class Scripture
 
     public string GetDisplayText(string fileHead, string fileVerse)
     {
-        Console.Write($"{reference.GetDisplayHead(fileHead)} ");   
-
+        Console.Write($"{reference.GetDisplayText(fileHead)} ");   
         _words = fileVerse.Split('$').Select(word => new Word(word)).ToList();
-
         foreach (Word word in _words)
         {
             Console.Write(word.GetDisplayText());
@@ -32,8 +30,10 @@ class Scripture
 
     public void HideRandomWords(List<Word> randomList, string fileHead)
     {
-        Console.Write(reference.GetDisplayHead(fileHead));
-        
+        Random random2 = new Random();
+            var randomElements = GetWords().OrderBy(x => random2.Next()).Take(3).ToList();
+            randomList.AddRange(randomElements);
+        Console.Write(reference.GetDisplayText(fileHead));
         foreach (Word word in randomList)
         {
             word.Hide();
