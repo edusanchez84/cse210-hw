@@ -18,8 +18,7 @@ class Program
         Random random1 = new Random();
         string fileName = "library.txt";
         string[] linesFile = System.IO.File.ReadAllLines(fileName);
-        int totalLines = linesFile.Count();
-        int randomLine = random1.Next(totalLines);
+        int randomLine = random1.Next(linesFile.Count());
         string randomLineSelected = linesFile[randomLine];
         string[] selected = randomLineSelected.Split("|");
         string fileHead = selected[0];
@@ -43,7 +42,7 @@ class Program
             switch(answer)
             {
                 case "":
-
+                    Console.WriteLine();
                     scripture.HideRandomWords(randomList, fileHead);
                     if (scripture.IsCompletelyHidden())
                     {
@@ -56,6 +55,11 @@ class Program
                 case "quit":
                 
                     return;
+
+                default:
+                    Console.WriteLine("Pleas type 'enter' or 'quit' to continue, let's try again!");
+                    scripture.GetDisplayText(fileHead, fileVerse);
+                    break;
             }
         }
     }               

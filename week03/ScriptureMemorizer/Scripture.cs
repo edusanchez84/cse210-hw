@@ -19,7 +19,7 @@ class Scripture
 
     public string GetDisplayText(string fileHead, string fileVerse)
     {
-        Console.Write($"{reference.GetDisplayText(fileHead)} ");   
+        Console.Write($"{reference.GetDisplayText(fileHead)}");   
         _words = fileVerse.Split('$').Select(word => new Word(word)).ToList();
         foreach (Word word in _words)
         {
