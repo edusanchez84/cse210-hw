@@ -4,6 +4,8 @@ class ReflectingActivity : Activity
 {
     private List<string> _prompts;
     private List<string> _questions;
+    List<int> _randomLinesPrompt = [];
+    List<int> _randomLinesQuestion = [];
 
     public ReflectingActivity (string name, string description) : base (name, description)
     {
@@ -57,6 +59,21 @@ class ReflectingActivity : Activity
     {
         Random random1 = new Random();
         int randomLine = random1.Next(_prompts.Count());
+        bool containsAll = Enumerable.Range(0, 3).All(n => _randomLinesPrompt.Contains(n));
+        if (containsAll)
+        {
+            _randomLinesPrompt = [];
+            _randomLinesPrompt.Add(randomLine);
+        }
+        else
+        {
+            while (_randomLinesPrompt.Contains(randomLine))
+            {
+                randomLine = random1.Next(_prompts.Count());
+            }
+            
+            _randomLinesPrompt.Add(randomLine);
+        }
         return _prompts[randomLine];
     }
 
@@ -64,6 +81,21 @@ class ReflectingActivity : Activity
     {
         Random random2 = new Random();
         int randomLine = random2.Next(_questions.Count());
+        bool containsAll = Enumerable.Range(0, 8).All(n => _randomLinesQuestion.Contains(n));
+        if (containsAll)
+        {
+            _randomLinesQuestion = [];
+            _randomLinesQuestion.Add(randomLine);
+        }
+        else
+        {
+            while (_randomLinesQuestion.Contains(randomLine))
+            {
+                randomLine = random2.Next(_questions.Count());
+            }
+            
+            _randomLinesQuestion.Add(randomLine);
+        }
         return _questions[randomLine];
     }
 

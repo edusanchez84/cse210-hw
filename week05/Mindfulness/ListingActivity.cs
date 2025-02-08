@@ -1,9 +1,13 @@
 using System;
+using System.Globalization;
 
 class ListingActivity : Activity
 {
     private int _count;
     private List<string> _prompts;
+    private List<string> _response;
+    
+    List<int> _randomLines = [];
 
     public ListingActivity(string name, string description) : base (name, description)
     {
@@ -16,6 +20,7 @@ class ListingActivity : Activity
             "-- When have you felt the Holy Ghost this month? --",
             "-- Who are some of your personal heroes? --"
         ];
+        _response = [];
     }
 
     public void Run()
@@ -30,33 +35,46 @@ class ListingActivity : Activity
 
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(_duration);
-        List<string> response = [];
-
+       
         while (DateTime.Now < endTime)
         {
             Console.Write("> ");
-            response.Add(Console.ReadLine());
+            _response.Add(Console.ReadLine());
             _count++;
         }
       
         Console.WriteLine($"You listed {_count} items");
     }
 
-    public string GetRandomPrompt()
+    public int GetRandomPrompt()
     {
         Random random1 = new Random();
         int randomLine = random1.Next(_prompts.Count());
-        return _prompts[randomLine];
-
+        bool containsAll = Enumerable.Range(0, 4).All(n => _randomLines.Contains(n));
+        if (containsAll)
+        {
+            _randomLines = [];
+            _randomLines.Add(randomLine);
+        }
+        else
+        {
+            while (_randomLines.Contains(randomLine))
+            {
+                randomLine = random1.Next(_prompts.Count());
+            }
+            
+            _randomLines.Add(randomLine);
+        }
+        return randomLine;
     }
 
     public void DisplayPrompt()
     {
-        Console.WriteLine(GetRandomPrompt());
+        Console.WriteLine(_prompts[GetRandomPrompt()]);       
     }
 
     public List<string> GetListFromUser()
     {
-        return [];
+        return _response;
     }
 }

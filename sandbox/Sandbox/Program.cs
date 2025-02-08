@@ -10,19 +10,32 @@ class Program
 {
     static void Main(string[] args)
     {
-        Random random1 = new Random();
-        string fileName = "library.txt";
-        string[] linesFile = System.IO.File.ReadAllLines(fileName);
-        int fileLines = linesFile.Count();
-        int randomLine = random1.Next(fileLines);
-        //Console.WriteLine(randomLine);
-        string randomLineSel = linesFile[randomLine];
-        //Console.WriteLine(randomLineSel);
-        string[] newLine = randomLineSel.Split("|");
-        string fileHead = newLine[0];
-        string fileVerse = newLine[1];
-        //Console.WriteLine(fileHead);
-        //Console.WriteLine(fileVerse);
+        List<string> _prompts = 
+        [
+            "-- Who are people that you appreciate? --",
+            "-- What are personal strengths of yours? --",
+            "-- Who are people that you have helped this week? --",
+            "-- When have you felt the Holy Ghost this month? --",
+            "-- Who are some of your personal heroes? --"
+        ];
         
+        Random random1 = new Random();
+        List<int> randomLines = [0, 1, 3, 4];
+        int randomLine = random1.Next(_prompts.Count());
+        
+        Console.WriteLine(randomLine);
+
+        //List<int> randomlines = [];
+        //int displayPrompLine = GetRandomPrompt();
+        while (randomLines.Contains(randomLine))
+        {
+            Console.WriteLine("Numero Repetido");
+            randomLine = random1.Next(_prompts.Count());
+            
+        }
+        Console.WriteLine($"Verificado {randomLine}");
+        //Console.WriteLine(randomLine);
+        
+
     }
 }

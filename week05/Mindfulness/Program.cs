@@ -1,3 +1,6 @@
+//Hello, as showing creativity and exceeding requirements I Make sure no random prompts/questions are selected until they have all been used at least once in that session.
+//the getrandomprompt and getrandomquestion on reflectingActivity and listingActivity classes have been modified to make sure of this behavior
+
 using System;
 using System.Collections;
 using System.Diagnostics;
